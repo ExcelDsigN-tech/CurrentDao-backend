@@ -28,10 +28,28 @@ This repository contains the **backend** (NestJS) of CurrentDao, handling APIs, 
 
 ### Installation
 
+#### Quick Setup (Recommended)
+
+**Windows:**
+```powershell
+.\scripts\setup.ps1
+```
+
+**Linux/macOS:**
+```bash
+chmod +x scripts/setup.sh
+./scripts/setup.sh
+```
+
+#### Manual Installation
+
 ```bash
 git clone https://github.com/CurrentDao-org/CurrentDao-backend.git
 cd CurrentDao-backend
 npm install
+npm install @nestjs/typeorm @nestjs/axios typeorm mysql2 axios ml-regression simple-statistics @types/simple-statistics
+cp .env.example .env
+npm run build
 ```
 
 ### Environment Variables
@@ -229,6 +247,50 @@ npm run test:cov
 # Run specific test file
 npm run test -- time-series.service.spec.ts
 ```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Module not found errors**
+   ```bash
+   # Install missing dependencies
+   npm install @nestjs/typeorm @nestjs/axios typeorm mysql2 axios ml-regression simple-statistics @types/simple-statistics
+   ```
+
+2. **Database connection errors**
+   - Ensure MySQL is running
+   - Check `.env` file for correct database credentials
+   - Create database if it doesn't exist: `CREATE DATABASE currentdao;`
+
+3. **API Key errors**
+   - Update `.env` file with actual API keys:
+     - OpenWeatherMap API: https://openweathermap.org/api
+     - FRED API: https://fred.stlouisfed.org/docs/api/api_key.html
+     - Alpha Vantage API: https://www.alphavantage.co/support/#api-key
+
+4. **Build errors**
+   ```bash
+   # Clean and rebuild
+   rm -rf dist node_modules
+   npm install
+   npm run build
+   ```
+
+5. **Lint errors**
+   ```bash
+   # Fix linting issues
+   npm run lint
+   ```
+
+### Pipeline Issues
+
+If the GitHub Actions pipeline fails:
+
+1. **Dependencies not installed**: The pipeline automatically installs all required dependencies
+2. **Test failures**: Check test logs for specific errors
+3. **Build failures**: Verify TypeScript compilation
+4. **Security scan failures**: Review and update vulnerable dependencies
 
 ## Contributing
 

@@ -91,10 +91,10 @@ export class CrossBorderTransaction {
   disputeId: string;
 
   @Column({ type: 'text', nullable: true })
-  notes: string;
+  notes?: string;
 
   @Column({ type: 'text', nullable: true })
-  failureReason: string;
+  failureReason?: string;
 
   @CreateDateColumn()
   createdAt: Date;

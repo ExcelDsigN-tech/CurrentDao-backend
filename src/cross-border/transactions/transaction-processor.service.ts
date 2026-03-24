@@ -78,9 +78,9 @@ export class TransactionProcessorService {
 
       savedTransaction.complianceStatus = this.mapComplianceStatus(complianceResult.overallStatus);
       savedTransaction.regulatoryData = complianceResult;
-      savedTransaction.convertedAmount = conversionResult?.convertedAmount;
-      savedTransaction.targetCurrency = conversionResult?.targetCurrency;
-      savedTransaction.exchangeRate = conversionResult?.exchangeRate;
+      savedTransaction.convertedAmount = conversionResult?.convertedAmount || null;
+      savedTransaction.targetCurrency = conversionResult?.targetCurrency || null;
+      savedTransaction.exchangeRate = conversionResult?.exchangeRate || null;
       savedTransaction.customsData = customsResult;
       savedTransaction.customsTariff = customsResult?.tariff;
       savedTransaction.regulatoryFees = customsResult?.regulatoryFees;
@@ -150,7 +150,7 @@ export class TransactionProcessorService {
 
   private async performCurrencyConversion(data: CreateInternationalTradeDto): Promise<ConversionResult | null> {
     if (!data.currencyConversion || data.currency === data.currencyConversion.targetCurrency) {
-      return null;
+      return undefined;
     }
 
     return this.currencyService.convertCurrency(
